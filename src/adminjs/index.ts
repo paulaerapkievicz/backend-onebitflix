@@ -2,15 +2,17 @@ import AdminJS from 'adminjs'
 import AdminJsExpress from '@adminjs/express'
 import AdminJsSequelize from '@adminjs/sequelize' // aponta qual é o ORM
 import { sequelize } from '../database'
+import { adminJsResources } from './resources'
 
 AdminJS.registerAdapter(AdminJsSequelize) // aponta qual o adaptador do banco de dados
 
 export const adminJs = new AdminJS({
   databases: [sequelize], // passa o banco de dados
-  rootPath: '/admin', 
+  rootPath: '/admin',
+  resources: adminJsResources, 
   branding: {
     companyName: 'OneBitFlix',
-    logo: '/onebitflix.svg',
+    logo: '/logoOnebitflix.svg',
     theme: {
       colors: {
         primary100: '#ff0043',
