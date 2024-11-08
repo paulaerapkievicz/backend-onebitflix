@@ -5,13 +5,15 @@ import { sequelize } from '../database'
 import { adminJsResources } from './resources'
 import { User } from '../models'
 import bcrypt from 'bcrypt'
+import { locale } from './locale'
 
 AdminJS.registerAdapter(AdminJsSequelize) // aponta qual o adaptador do banco de dados
 
 export const adminJs = new AdminJS({
   databases: [sequelize], // passa o banco de dados
   rootPath: '/admin',
-  resources: adminJsResources, 
+  resources: adminJsResources,
+  locale: locale,
   branding: {
     companyName: 'OneBitFlix',
     logo: '/logoOnebitflix.svg',
