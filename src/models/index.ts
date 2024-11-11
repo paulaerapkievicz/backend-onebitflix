@@ -7,7 +7,7 @@ import { User } from './User'
 Category.hasMany(Course, { as: 'courses' }) // hasMany:uma categoria tem muitos cursos
 Course.belongsTo(Category) // belongsTo: um curso pertence a uma categoria
 
-Course.hasMany(Episode)
+Course.hasMany(Episode, { as: 'episodes' })
 Episode.belongsTo(Course)
 
 export {
