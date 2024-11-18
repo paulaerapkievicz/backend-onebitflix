@@ -2,6 +2,10 @@ import { sequelize } from '../database'
 import { DataTypes, Model, Optional } from 'sequelize'
 import bcrypt from 'bcrypt'
 
+// Definição do tipo de callback para verificação de senha 
+type CheckPasswordCallback = (err?: Error, isSame?: boolean) => void
+
+// Definir a interface para os atributos do usuário
 export interface User {
   id: number
   firstName: string
@@ -13,12 +17,17 @@ export interface User {
   role: 'admin' | 'user'
 }
 
+// Definir os atributos opcionais para criação
 export interface UserCreationAttributes
   extends Optional<User, 'id'> {}
 
+// Estender a interface do Sequelize Model
 export interface UserInstance
-  extends Model<User, UserCreationAttributes>, User {}
+  extends Model<User, UserCreationAttributes>, User {
+    checkPassword: (password: string, callbackfn: CheckPasswordCallback) => void
+  }
 
+// Definir o modelo no Sequelize
 export const User = sequelize.define<UserInstance, User>('users', {
   id: {
     allowNull: false,
@@ -70,3 +79,14 @@ export const User = sequelize.define<UserInstance, User>('users', {
         }
       }
 })
+
+//Adicionar o método checkPassword ao protótipo
+User.prototype.checkPassword = function ( password: string, callbackfn: CheckPasswordCallback) {
+  bcrypt.compare(password, this.password, (err, isSame) => {
+    if (err) {
+      callbackfn(err)
+    } else {
+      callbackfn(err, isSame)
+    }
+  })
+}
