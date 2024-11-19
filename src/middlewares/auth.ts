@@ -28,6 +28,10 @@ export function ensureAuth(req: AuthenticatedRequest, res: Response, next: NextF
   })
 }
 
+// Para nos beneficiarmos do player nativo do navegador, iremos
+// criar um middleware específico de autorização para o endpoint
+// de streaming. Ele verificará pelo token presente nos
+// parâmetro de query da url
 export function ensureAuthViaQuery(req: AuthenticatedRequest, res: Response, next: NextFunction) {
     const { token } = req.query
   
