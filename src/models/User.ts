@@ -81,7 +81,7 @@ export const User = sequelize.define<UserInstance, User>('users', {
 })
 
 //Adicionar o método checkPassword ao protótipo
-User.prototype.checkPassword = function ( password: string, callbackfn: CheckPasswordCallback) {
+User.prototype.checkPassword = function (password: string, callbackfn: CheckPasswordCallback) {
   bcrypt.compare(password, this.password, (err, isSame) => {
     if (err) {
       callbackfn(err)
